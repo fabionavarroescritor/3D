@@ -1,0 +1,93 @@
+//variáveis de posição da esfera
+float x=width/2, y=height/2, z=0;
+//variáveis de velocidade da esfera
+float vx =2, vy = 1.5, vz = 0.7;
+
+//variáveis da esfera 2
+float bx = width/2, by = height/2, bz = 0;
+//variável de velocidade da esfera 2
+float bxv = 2.5, byv = 2.6, bzv = 1;
+
+
+void setup() {
+
+  size(1000, 700, P3D); //canvas
+  smooth(10); //atenuação
+}
+
+void draw() {
+
+  background(51, 137, 240);
+
+  push();
+  translate(width/2, height/2, 0);
+  noFill();
+  stroke(234, 84, 99);
+  strokeWeight(7);
+  box(900);
+  pop();
+
+  float lx = map(x, 0, width, -1, 1);
+  float ly = map(y, 0, height, -1, 1);
+  float lz = map(z, 0, width, -1, 1);
+
+  float rx = map(x, 0, width, 0, -PI/8);
+  
+  float rb = map(bx, 0, width, 0, -PI/6);
+  
+  
+  float lbx = map(x, 0, width, -1, 1);
+  float lby = map(y, 0, height, -1, 1);
+  float lbz = map(z, 0, width, -1, 1);
+
+  push();
+  rotateX(rx);
+  translate(x, y, z);
+  noStroke();
+  lights();
+  directionalLight(246, 123, 14, lx, 0, 1);
+  directionalLight(253, 107, 9, 0, ly, 1);
+  directionalLight(253, 107, 9, 0, 1, lz);
+  fill(249, 217, 20); 
+  sphere(70);
+  pop();
+
+  push();
+  rotateX(rb);
+  translate(bx, by, bz);
+  noStroke();
+  lights();
+  directionalLight(236, 21, 16, lbx, 0, 1);
+  directionalLight(235, 21, 35, 0, lby, 1);
+  directionalLight(235, 21, 35, 0, 1, lbz);
+  fill(230, 110, 211);
+  sphere(70); 
+  pop();
+
+  x = x+vx;  //estrutura de controle, velocidade dos eixos
+  y = y+vy;
+  z = z+vz;
+
+  if (x > 900 || x < 0) {
+    vx*=-1;
+  }
+  if (y > 700  || y < 0) {
+    vy*=-1;
+  }
+  if (z > 2 || z < 0) {
+    vz*=-1;
+  }
+  bx = bx+bxv;  //estrutura de controle, velocidade dos eixos
+  by = by+byv;
+  bz = bz+bzv;
+
+  if (bx > 900 || bx < 0) {
+    bxv*=-1;
+  }
+  if (by > 700  || by < 0) {
+    byv*=-1;
+  }
+  if (bz > 2 || bz < 0) {
+    bzv*=-1;
+  }
+}
